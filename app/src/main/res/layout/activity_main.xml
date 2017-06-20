@@ -9,33 +9,34 @@
         android:id="@+id/main_fl"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"></FrameLayout>
+        android:layout_weight="1">
+    </FrameLayout>
 
     <RadioGroup
-        android:id="@+id/main_rg"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/main_rg">
 
         <RadioButton
+            android:layout_marginTop="5dp"
             android:id="@+id/rb_main"
             style="@style/MainButtonStyle"
-            android:layout_marginTop="5dp"
             android:checked="true"
             android:drawableTop="@drawable/main_icon"
             android:text="首页" />
 
         <RadioButton
+            android:layout_marginTop="5dp"
             android:id="@+id/rb_invest"
             style="@style/MainButtonStyle"
-            android:layout_marginTop="5dp"
             android:drawableTop="@drawable/invest_icon"
             android:text="投资" />
 
         <RadioButton
+            android:layout_marginTop="5dp"
             android:id="@+id/rb_propert"
             style="@style/MainButtonStyle"
-            android:layout_marginTop="5dp"
             android:drawableTop="@drawable/property_icon"
             android:text="资产" />
 
@@ -48,6 +49,5 @@
     </RadioGroup>
 
 </LinearLayout>
-
 
 

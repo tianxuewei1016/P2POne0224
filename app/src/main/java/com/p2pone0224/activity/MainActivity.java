@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     FrameLayout mainFl;
     @Bind(R.id.main_rg)
     RadioGroup mainRg;
-
     private HomeFragment homeFragment;
     private InvestFragment investFragment;
     private MoreFragment moreFragment;
@@ -39,11 +38,16 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         initView();
+        //初始化数据
         initData();
+        //事件监听
         initListener();
     }
 
+    //监听
     private void initListener() {
+
+
         mainRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -52,11 +56,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * @param checkedId
-     */
     private void switchFragment(int checkedId) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        final FragmentTransaction transaction =
+                getSupportFragmentManager().beginTransaction();
+
         hiddenFragment(transaction);
         switch (checkedId) {
             case R.id.rb_invest:
@@ -66,11 +69,12 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     transaction.show(investFragment);
                 }
+
                 break;
             case R.id.rb_main:
                 if (homeFragment == null) {
                     homeFragment = new HomeFragment();
-                    transaction.add(R.id.rb_main, homeFragment);
+                    transaction.add(R.id.main_fl, homeFragment);
                 } else {
                     transaction.show(homeFragment);
                 }
@@ -78,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.rb_more:
                 if (moreFragment == null) {
                     moreFragment = new MoreFragment();
-                    transaction.add(R.id.rb_more, moreFragment);
+                    transaction.add(R.id.main_fl, moreFragment);
                 } else {
                     transaction.show(moreFragment);
                 }
@@ -86,20 +90,23 @@ public class MainActivity extends AppCompatActivity {
             case R.id.rb_propert:
                 if (propertyFragment == null) {
                     propertyFragment = new PropertyFragment();
-                    transaction.add(R.id.rb_propert, propertyFragment);
+                    transaction.add(R.id.main_fl, propertyFragment);
                 } else {
                     transaction.show(propertyFragment);
                 }
                 break;
         }
+        transaction.commit();
     }
 
+
+    //隐藏所有的fragment
     private void hiddenFragment(FragmentTransaction transaction) {
         if (homeFragment != null) {
-            homeFragment = new HomeFragment();
+            transaction.hide(homeFragment);
         }
         if (investFragment != null) {
-            investFragment = new InvestFragment();
+            transaction.hide(investFragment);
         }
         if (moreFragment != null) {
             transaction.hide(moreFragment);
@@ -114,14 +121,20 @@ public class MainActivity extends AppCompatActivity {
         switchFragment(R.id.rb_main);
     }
 
+    /**
+     * 初始化控件
+     */
     private void initView() {
 
     }
 
+    /**
+     * 双击提示退出程序
+     */
     private boolean isExit = false;
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (isExit) {
                 finish();
@@ -137,6 +150,6 @@ public class MainActivity extends AppCompatActivity {
             }, 2000);
             return true;
         }
-        return super.onKeyDown(keyCode, event);
+        return super.onKeyUp(keyCode, event);
     }
 }

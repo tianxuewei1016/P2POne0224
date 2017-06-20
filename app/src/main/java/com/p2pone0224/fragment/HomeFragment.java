@@ -6,7 +6,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import com.p2pone0224.R;
+import com.p2pone0224.utils.UIUtils;
 
 /**
  * 作者：田学伟 on 2017/6/20 17:55
@@ -14,13 +16,11 @@ import android.widget.TextView;
  * 作用：
  */
 
-public class HomeFragment extends Fragment{
+public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        TextView textView = new TextView(getActivity());
-        textView.setText("aaaaaa");
-        return textView;
+        return UIUtils.inflate(R.layout.fragment_home);
     }
 
     @Override
