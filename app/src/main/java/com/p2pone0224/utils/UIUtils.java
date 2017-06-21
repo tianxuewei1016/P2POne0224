@@ -8,12 +8,13 @@ import com.p2pone0224.common.MyApplication;
 /**
  * 作者：田学伟 on 2017/6/20 18:27
  * QQ：93226539
- * 作用：
+ * 作用：加载布局的工具类
  */
 
 public class UIUtils {
     /**
      * 加载布局
+     *
      * @param id
      * @return
      */
@@ -23,9 +24,15 @@ public class UIUtils {
 
     /**
      * 返回一个上下文
+     *
      * @return
      */
     private static Context getContext() {
         return MyApplication.getContext();
+    }
+
+    public static String stringFormat(String key, String value) {
+        String versionName = String.format(key, value);
+        return versionName;
     }
 }
