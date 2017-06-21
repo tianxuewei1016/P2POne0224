@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.p2pone0224.R;
+import com.p2pone0224.common.AppManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,6 +31,8 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
+
+        AppManager.getInstance().addActivity(this);
 
         initView();
         initData();
@@ -96,5 +99,11 @@ public class SplashActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return "3";
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AppManager.getInstance().removeActivity(this);
     }
 }
