@@ -22,8 +22,8 @@ public class MyApplication extends Application {
         super.onCreate();
         //初始化给上下文
         context = this;
-
-        //CrashHandler.getInstance().init(this);
+        //注册CrashHandler,出现bug的时候退出程序
+        CrashHandler.getInstance().init(this);
 
     }
 }
