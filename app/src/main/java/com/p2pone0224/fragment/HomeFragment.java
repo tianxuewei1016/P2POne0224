@@ -10,8 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.p2pone0224.R;
+import com.p2pone0224.bean.IndexBean;
 import com.p2pone0224.common.AppNetConfig;
+import com.p2pone0224.utils.HttpUtils;
 import com.p2pone0224.utils.UIUtils;
 import com.squareup.picasso.Picasso;
 import com.youth.banner.Banner;
@@ -66,7 +69,46 @@ public class HomeFragment extends Fragment {
     private List<String> list = new ArrayList<>();
 
     private void initData() {
-        list.add(AppNetConfig.BASE_URL + "images/index02.png");
+        loadNet();
+    }
+
+    private void loadNet() {
+//        AsyncHttpClient client = new AsyncHttpClient();
+//        client.get(AppNetConfig.INDEX,new AsyncHttpResponseHandler(){
+//            @Override
+//            public void onSuccess(int statusCode, String content) {
+//                super.onSuccess(statusCode, content);
+//                //解析数据
+//                IndexBean indexBean = JSON.parseObject(content,IndexBean.class);
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable error, String content) {
+//                super.onFailure(error, content);
+//            }
+//        });
+
+        HttpUtils.getInstance().get(AppNetConfig.INDEX, new HttpUtils.OnHttpClickListener() {
+            @Override
+            public void onSuccess(String json) {
+                IndexBean indexBean = JSON.parseObject(json, IndexBean.class);
+                initBanner(indexBean);
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
+    }
+
+    private void initBanner(IndexBean indexBean) {
+        List<IndexBean.ImageArrBean>imageArr = indexBean.getImageArr();
+        for (int i=0;i<imageArr.size();i++){
+            String imaurl = imageArr.get(i).getIMAURL();
+            list.add(AppNetConfig.BASE_URL+imaurl);
+        }
         //设置图片加载器
         banner.setImageLoader(new GlideImageLoader());
         //设置图片集合
