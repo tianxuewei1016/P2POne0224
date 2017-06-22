@@ -12,27 +12,37 @@ import com.p2pone0224.common.MyApplication;
  */
 
 public class UIUtils {
-    /**
-     * 加载布局
-     *
-     * @param id
-     * @return
-     */
+
+
+    /*
+    * 加载布局
+    * */
     public static View inflate(int id) {
         return View.inflate(getContext(), id, null);
     }
 
-    /**
-     * 返回一个上下文
-     *
-     * @return
-     */
+
+    /*
+    * 返回一个上下文
+    * */
     private static Context getContext() {
+
         return MyApplication.getContext();
     }
 
-    public static String stringFormat(String key, String value) {
-        String versionName = String.format(key, value);
+
+    /*
+    * 格式化字符串 - 占位字符
+    * */
+    public static String stringFormat(int id, String value) {
+        String versionName = String.format(getString(id), value);
         return versionName;
+    }
+
+    /*
+    * 从string文件获取字符串
+    * */
+    public static String getString(int id) {
+        return getContext().getResources().getString(id);
     }
 }
