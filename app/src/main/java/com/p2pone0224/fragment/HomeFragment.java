@@ -1,21 +1,15 @@
 package com.p2pone0224.fragment;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.p2pone0224.R;
+import com.p2pone0224.base.BaseFragment;
 import com.p2pone0224.bean.IndexBean;
 import com.p2pone0224.common.AppNetConfig;
 import com.p2pone0224.utils.HttpUtils;
-import com.p2pone0224.utils.UIUtils;
 import com.squareup.picasso.Picasso;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
@@ -32,7 +26,7 @@ import butterknife.ButterKnife;
  * 作用：
  */
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseFragment {
     @Bind(R.id.base_title)
     TextView baseTitle;
     @Bind(R.id.base_back)
@@ -46,29 +40,24 @@ public class HomeFragment extends Fragment {
     @Bind(R.id.tv_home_yearrate)
     TextView tvHomeYearrate;
 
-    @Nullable
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = UIUtils.inflate(R.layout.fragment_home);
-        ButterKnife.bind(this, view);
-        return view;
+    public String getChildUrl() {
+        return null;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        initView();
-        initData();
-        initListener();
+    public void initTitle() {
+        baseTitle.setText("首页");
     }
 
-    private void initListener() {
+    public void initListener() {
 
     }
 
     private List<String> list = new ArrayList<>();
 
-    private void initData() {
+    public void initData() {
         loadNet();
     }
 
@@ -89,7 +78,7 @@ public class HomeFragment extends Fragment {
 //            }
 //        });
 
-        HttpUtils.getInstance().get(AppNetConfig.INDEX, new HttpUtils.OnHttpClickListener() {
+        HttpUtils.getInstance().get(AppNetConfig.INDEX, new HttpUtils.OnHttpClientListener() {
             @Override
             public void onSuccess(String json) {
                 IndexBean indexBean = JSON.parseObject(json, IndexBean.class);
@@ -104,10 +93,10 @@ public class HomeFragment extends Fragment {
     }
 
     private void initBanner(IndexBean indexBean) {
-        List<IndexBean.ImageArrBean>imageArr = indexBean.getImageArr();
-        for (int i=0;i<imageArr.size();i++){
+        List<IndexBean.ImageArrBean> imageArr = indexBean.getImageArr();
+        for (int i = 0; i < imageArr.size(); i++) {
             String imaurl = imageArr.get(i).getIMAURL();
-            list.add(AppNetConfig.BASE_URL+imaurl);
+            list.add(AppNetConfig.BASE_URL + imaurl);
         }
         //设置图片加载器
         banner.setImageLoader(new GlideImageLoader());
@@ -126,8 +115,13 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void initView() {
+    public void initView() {
 
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.fragment_home;
     }
 
     @Override

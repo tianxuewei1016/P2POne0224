@@ -2,6 +2,7 @@ package com.p2pone0224.common;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Handler;
 
 /**
  * 作者：田学伟 on 2017/6/20 18:28
@@ -11,19 +12,33 @@ import android.content.Context;
 
 public class MyApplication extends Application {
 
-    private static Context context;
-
     public static Context getContext() {
         return context;
     }
+    private static Context context;
+    private static Handler handler;
+    private static int pid;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        //初始化给上下文
+        //初始化上下文
         context = this;
-        //注册CrashHandler,出现bug的时候退出程序
-        CrashHandler.getInstance().init(this);
+        //初始化crashHandler
+        //CrashHandler.getInstance().init(this);
+
+        handler = new Handler();
+        pid = android.os.Process.myPid();
+
 
     }
+
+    public static int getPid(){
+        return pid;
+    }
+
+    public static Handler getHandler(){
+        return handler;
+    }
 }
+
