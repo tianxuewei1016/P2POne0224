@@ -1,24 +1,26 @@
 package com.p2pone0224.activity;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import com.p2pone0224.base.BaseActivity;
 
-import com.p2pone0224.R;
-import com.p2pone0224.common.AppManager;
-
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+    public void initListener() {
 
-        AppManager.getInstance().addActivity(this);
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        AppManager.getInstance().removeActivity(this);
+    public void initData() {
+
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public int getLayoutId() {
+        return 0;
     }
 }

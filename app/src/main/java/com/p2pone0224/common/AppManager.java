@@ -6,9 +6,7 @@ import android.util.Log;
 import java.util.Stack;
 
 /**
- * 作者：田学伟 on 2017/6/21 13:36
- * QQ：93226539
- * 作用：
+ * Created by Administrator on 2017/6/21.
  */
 
 public class AppManager {
@@ -21,26 +19,22 @@ public class AppManager {
     *
     * */
 
-    private AppManager() {
-    }
-
-    ;
+    private AppManager(){};
 
     private static AppManager appManager = new AppManager();
 
-    public static AppManager getInstance() {
+    public static AppManager getInstance(){
         return appManager;
     }
 
     private Stack<Activity> stack = new Stack<>();
-
     /*
     * 添加activity
     * */
-    public void addActivity(Activity activity) {
-        Log.d("stack", "addActivity: " + activity.getClass().toString());
+    public void addActivity(Activity activity){
+        Log.d("stack", "addActivity: "+activity.getClass().toString());
         //校验
-        if (activity != null) {
+        if (activity != null){
             stack.add(activity);
         }
     }
@@ -49,14 +43,15 @@ public class AppManager {
     * 删除activity
     *
     * */
-    public void removeActivity(Activity activity) {
-//        Log.d("stack", "removeActivity: "+activity.getClass().toString());
-        if (activity != null) {
+    public void removeActivity(Activity activity){
 
-            for (int i = stack.size() - 1; i >= 0; i--) {
+//        Log.d("stack", "removeActivity: "+activity.getClass().toString());
+        if (activity != null){
+
+            for (int i = stack.size()-1; i >= 0; i--) {
                 Activity currentActivity = stack.get(i);
                 //Log.d("stack", "currentActivity: "+currentActivity.getClass().toString());
-                if (currentActivity.getClass().equals(activity.getClass())) {
+                if (currentActivity.getClass().equals(activity.getClass())){
 
                     currentActivity.finish();
                     stack.remove(i);
@@ -72,16 +67,18 @@ public class AppManager {
     * 删除所有的Activity
     *
     * */
-    public void removeAll() {
 
-        for (int i = stack.size() - 1; i >= 0; i++) {
+    public void removeAll(){
+
+        for (int i = stack.size()-1; i >=0 ; i++) {
 
             Activity currentActivity = stack.get(i);
 
-            if (currentActivity != null) {
+            if (currentActivity != null){
                 currentActivity.finish();
                 stack.remove(i);
             }
         }
     }
+
 }
