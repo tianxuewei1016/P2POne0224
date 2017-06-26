@@ -1,10 +1,15 @@
 package com.p2pone0224.utils;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
 import android.view.View;
 
 import com.p2pone0224.common.MyApplication;
+
+import java.util.Random;
 
 /**
  * 作者：田学伟 on 2017/6/20 18:27
@@ -73,5 +78,28 @@ public class UIUtils {
         } else {
             MyApplication.getHandler().post(runnable);
         }
+    }
+
+    /**
+     * 获取随机颜色
+     *
+     * @return
+     */
+    public static int getColor() {
+        //产生随机颜色
+        Random random = new Random();
+        int red = random.nextInt(100) + 50;
+        int green = random.nextInt(100) + 50;
+        int blue = random.nextInt(100) + 50;
+        return Color.rgb(red, green, blue);
+    }
+
+    public static Drawable getDrawable() {
+        GradientDrawable drawable = new GradientDrawable();
+        drawable.setColor(Color.BLUE);
+        drawable.setCornerRadius(20);
+        drawable.setStroke(2, Color.RED);
+        drawable.setGradientType(GradientDrawable.RECTANGLE);
+        return drawable;
     }
 }

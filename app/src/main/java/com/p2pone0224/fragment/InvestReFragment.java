@@ -1,6 +1,5 @@
 package com.p2pone0224.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +10,6 @@ import com.p2pone0224.R;
 import com.p2pone0224.base.BaseFragment;
 import com.p2pone0224.utils.UIUtils;
 import com.p2pone0224.view.randomLayout.StellarMap;
-
-import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -112,12 +109,7 @@ public class InvestReFragment extends BaseFragment {
             TextView textView = new TextView(getActivity());
             textView.setText(datas[group * 7 + position]);
             //产生随机颜色
-            Random random = new Random();
-            int red = random.nextInt(100) + 50;
-            int green = random.nextInt(100) + 50;
-            int blue = random.nextInt(100) + 50;
-
-            textView.setTextColor(Color.rgb(red, green, blue));
+            textView.setTextColor(UIUtils.getColor());
             return textView;
         }
 
