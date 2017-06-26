@@ -2,6 +2,9 @@ package com.p2pone0224.utils;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import java.util.Map;
 
 /**
  * 作者：田学伟 on 2017/6/22 13:18
@@ -13,31 +16,32 @@ public class HttpUtils {
 
     private AsyncHttpClient httpClient;
 
-    private HttpUtils(){
+    private HttpUtils() {
         httpClient = new AsyncHttpClient();
     }
 
     private static HttpUtils httpUtils = new HttpUtils();
 
-    public static HttpUtils getInstance(){
+    public static HttpUtils getInstance() {
         return httpUtils;
     }
 
 
     private OnHttpClientListener onHttpClientListener;
-    public void get(String url, final OnHttpClientListener onHttpClientListener){
+
+    public void get(String url, final OnHttpClientListener onHttpClientListener) {
 
         this.onHttpClientListener = onHttpClientListener;
-        httpClient.get(url,handler);
+        httpClient.get(url, handler);
     }
 
 
-    AsyncHttpResponseHandler handler = new AsyncHttpResponseHandler(){
+    AsyncHttpResponseHandler handler = new AsyncHttpResponseHandler() {
         @Override
         public void onSuccess(int statusCode, String content) {
             super.onSuccess(statusCode, content);
 
-            if (onHttpClientListener != null){
+            if (onHttpClientListener != null) {
                 onHttpClientListener.onSuccess(content);
             }
         }
@@ -45,17 +49,24 @@ public class HttpUtils {
         @Override
         public void onFailure(Throwable error, String content) {
             super.onFailure(error, content);
-            if (onHttpClientListener != null){
+            if (onHttpClientListener != null) {
                 onHttpClientListener.onFailure(content);
             }
 
         }
     };
 
-//    public void post(String url, Map<String,String> map,
-//                     final OnHttpClientListener onHttpClientListener){
-//
-//        RequestParams params = new RequestParams();
+    public void post(String url, Map<String, String> map,
+                     final OnHttpClientListener onHttpClientListener) {
+        this.onHttpClientListener = onHttpClientListener;
+
+//        Set<String> keys = map.keySet();
+//        for (String key:keys){
+//            String value = map.get(key);
+//        }
+
+        RequestParams params = new RequestParams(map);
+        httpClient.post(url, params, handler);
 //
 //        httpClient.post(url,params,new AsyncHttpResponseHandler(){
 //            @Override
@@ -75,13 +86,11 @@ public class HttpUtils {
 //                }
 //            }
 //        });
-//    }
-
-
-    public interface OnHttpClientListener{
-        void onSuccess(String json);
-        void onFailure(String message);
     }
 
+    public interface OnHttpClientListener {
+        void onSuccess(String json);
 
+        void onFailure(String message);
+    }
 }

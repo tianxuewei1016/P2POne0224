@@ -58,7 +58,7 @@ public class SplashActivity extends BaseActivity {
 
     public boolean isLogin() {
 
-        return true;
+        return false;
     }
 
     public void initData() {
