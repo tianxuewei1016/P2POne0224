@@ -57,8 +57,12 @@ public class SplashActivity extends BaseActivity {
     }
 
     public boolean isLogin() {
-
-        return false;
+        String name = getUser().getName();
+        if (name.equals("admin")) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public void initData() {

@@ -1,5 +1,6 @@
 package com.p2pone0224.activity;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -11,8 +12,12 @@ import android.widget.TextView;
 
 import com.p2pone0224.R;
 import com.p2pone0224.base.BaseActivity;
+import com.p2pone0224.bean.LoginBean;
 import com.p2pone0224.common.AppNetConfig;
 import com.p2pone0224.utils.HttpUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -75,7 +80,35 @@ public class LoginActivity extends BaseActivity {
                 HttpUtils.getInstance().post(AppNetConfig.LOGIN, map, new HttpUtils.OnHttpClientListener() {
                     @Override
                     public void onSuccess(String json) {
-                        Log.d("json", "onSuccess: " + json);
+//                        Log.d("json", "onSuccess: " + json);
+                        try {
+                            JSONObject obj = new JSONObject(json);
+                            boolean isOk = obj.getBoolean("success");
+                            if (isOk) {
+                                //登录成功
+                                JSONObject data = obj.getJSONObject("data");
+                                String name = data.getString("name");
+                                String imageurl = data.getString("imageurl");
+                                String iscredit = data.getString("iscredit");
+                                String phone = data.getString("phone");
+
+                                LoginBean bean = new LoginBean();
+                                bean.setIscredit(iscredit);
+                                bean.setName(name);
+                                bean.setPhone(phone);
+                                bean.setImageurl(imageurl);
+
+                                //存储数据
+                                saveUser(bean);
+                                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                                finish();
+                            }else{
+                                showToast("账号或者密码不正确");
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     @Override
